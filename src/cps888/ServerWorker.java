@@ -35,6 +35,7 @@ public class ServerWorker extends Thread {
             this.output = new PrintWriter(this.clientSocket.getOutputStream(), true);
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
             this.username = input.readLine();
+            System.out.println(this.username + " online");
             broadcast(this.username, "online");
             
         } catch(IOException e) {
