@@ -23,7 +23,7 @@ public class Client {
     private PrintWriter output;
     private BufferedReader input;
     
-    Client(String username, String server, int port) {
+    public Client(String username, String server, int port) {
         this.username = username;
         this.server = server;
         this.port = port;
