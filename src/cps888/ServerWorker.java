@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cps888;
 
 import java.io.*;
@@ -10,11 +5,6 @@ import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
-
-/**
- *
- * @author Ragulan
- */
 
 public class ServerWorker extends Thread {
     private Server server;
@@ -26,16 +16,19 @@ public class ServerWorker extends Thread {
     private BufferedReader input;
     private final SimpleDateFormat dateFormatter;
     
+    ChatDatabase cb = new ChatDatabase();
+    
     public ServerWorker(Server server, Socket clientSocket) {
         this.server = server;
         this.clientSocket = clientSocket;
-        this.dateFormatter = new SimpleDateFormat("HH:mm:ss");
+        // date format follows pattern of yyyy-MM-dd HH:mm:ss
+        this.dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         try {
             this.output = new PrintWriter(this.clientSocket.getOutputStream(), true);
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
             this.username = input.readLine();
-            System.out.println(this.username + " online");
+            System.out.println(this.username + " is now online");
             broadcast(this.username, "online");
             
         } catch(IOException e) {
@@ -95,26 +88,33 @@ public class ServerWorker extends Thread {
     
     //sending either direct message or message to all, or a group
     private synchronized void broadcast(String from, String message) {
-        String time = this.dateFormatter.format(new Date());
+        String datetime = this.dateFormatter.format(new Date());
         String tokens [] = message.split(" ", 2);
         boolean isDirectMessage = false;
         boolean isGroup = false;
         String sendTo = "";
-        String msg = time  + " " + from + ": "  + message;
+        String msg = datetime  + " " + from + ": "  + message;
         String group = "";
         
         //is a direct message if the text contains @username
         if(tokens[0].charAt(0) == '@') {
             isDirectMessage = true;
             sendTo = tokens[0].substring(1);
-            msg = time + " " + from + ": " + tokens[1];
-            
+            msg = datetime + " " + from + ": " + tokens[1];
+            // establish database connection
+            cb.connect();
+            // obtain user id of sender
+            int sender = cb.getUserRow(from);
+            // obtain user id of receiver
+            int receiver = cb.getUserRow(sendTo);
+            // pass user id of sender and receiver, message, datetime to database
+            cb.insertChatMessage(sender, receiver, tokens[1], datetime);
         }
         //messaging a group case
         if(tokens[0].charAt(0) == '#') {
             isGroup = true;
             group = tokens[0].substring(1);
-            msg = group + " " + time + " " + from + ": " + tokens[1];
+            msg = group + " " + datetime + " " + from + ": " + tokens[1];
         }
         
         //iterates through all workers and finds worker whose username matches
@@ -148,7 +148,7 @@ public class ServerWorker extends Thread {
             String tokens [] = message.split(" ", 2);
             
             if(tokens[0].equalsIgnoreCase("logout")) {
-                System.out.println(this.username + " has left the chat room");
+                System.out.println(this.username + " has left the chat room and is offline");
                 connected = false;
             } else if(tokens[0].equalsIgnoreCase("getActiveUsers")) {
                 this.server.getWorkers().stream().forEach((worker) -> {
@@ -175,7 +175,5 @@ public class ServerWorker extends Thread {
         }
         this.server.removeWorker(this);
         close();
-    }
-    
-    
+    }   
 }
