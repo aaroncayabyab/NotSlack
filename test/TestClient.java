@@ -54,6 +54,40 @@ public class TestClient {
         // if too much things are being tested, separate into different methods
         // dont duplicate your testing
     }
+    @Test
+    public void testDisconnect()
+    {
+        //Check to see that the client is not connected to the server 
+    }
+    @Test
+    public void testReceivedMessage()
+    {
+        //Check if client got the correct message sent from another user
+    }
+    
+    @Test 
+    public void testUserConnection()
+    {
+        //Check if two users are connected to each other by checking if the other user got the 
+        //correct message that was sent
+    }
+    
+    @Test
+    public void testCreateGroup()
+    {
+        //Verify that the user can create a group chat 
+    }
+    @Test
+    public void testLeaveGroup()
+    {
+        //Check if the user successfully leaves the chat and doesn't receive any messages.
+    }
+    
+    @Test
+    public void testValidUserAdded()
+    {
+        //Check that only the users listed online or in the application are added into the group chat
+    }
     
     
 }
