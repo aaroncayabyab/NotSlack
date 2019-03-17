@@ -18,17 +18,29 @@ import javafx.stage.StageStyle;
  * @author aacay
  */
 public class Menu extends Application {
+    private MenuController mc;
     
     @Override
     public void start(Stage stage) throws IOException {
         
-        Parent root = FXMLLoader.load(getClass().getResource("MenuView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MenuView.fxml"));
+        Parent root = (Parent)fxmlLoader.load();
+        mc = fxmlLoader.<MenuController>getController();
+        
         Scene scene = new Scene(root);
         
-        stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("NotSlack");
         stage.setScene(scene);
         stage.show();
+    }
+    
+    @Override
+    public void stop() throws Exception {
+        if(mc.getClient() != null)
+            mc.getClient().disconnect();
+
+        
+        
     }
     /**
      * @param args the command line arguments

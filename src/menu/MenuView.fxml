@@ -61,7 +61,7 @@
             </AnchorPane>
          </top>
       </BorderPane>
-      <AnchorPane id="loginPane" fx:id="loginPane" layoutX="216.0" layoutY="91.0" visible="true">
+      <AnchorPane id="loginPane" fx:id="loginPane" layoutX="226.0" layoutY="93.0" visible="true">
          <children>
             <VBox alignment="CENTER" layoutY="153.158203125">
                <children>
@@ -87,26 +87,9 @@
             </VBox>
          </children>
       </AnchorPane>
-      <StackPane id="closeBtn" fx:id="closeBtn" layoutX="562.0" layoutY="14.0" onMouseClicked="#onClose">
-         <children>
-            <Circle radius="15.0" stroke="BLACK" strokeType="INSIDE">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </Circle>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="5.0" text="X" textAlignment="CENTER">
-               <font>
-                  <Font name="Arial Bold" size="20.0" />
-               </font>
-            </Text>
-         </children>
-      </StackPane>
-      <StackPane id="closeBtn" fx:id="logo" layoutX="260.0" layoutY="29.0" onMouseClicked="#onClose" prefHeight="80.0" prefWidth="82.0">
+      <StackPane id="logo" fx:id="logo" layoutX="260.0" layoutY="29.0" prefHeight="80.0" prefWidth="82.0">
          <children>
             <Circle fill="#3d9ce4" radius="38.0" stroke="WHITE" strokeType="INSIDE">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
             </Circle>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="5.0" text="!#" textAlignment="CENTER">
                <font>

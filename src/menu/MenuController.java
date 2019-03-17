@@ -13,21 +13,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -38,7 +29,7 @@ import javafx.stage.Stage;
  */
 public class MenuController implements Initializable {
     //General variables
-    Client client;
+    private Client client;
     @FXML
     private Text errMsg; 
     
@@ -116,21 +107,17 @@ public class MenuController implements Initializable {
         
     }
     
-    @FXML
-    public void onClose(MouseEvent event) {
-        if(client.start()) {
-            client.disconnect();
-        }
-        Platform.exit();
-    }
-    
+     public Client getClient() {
+        return this.client;
+    }   
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }  
     
+
     
 }
