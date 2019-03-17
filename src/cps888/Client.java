@@ -56,7 +56,7 @@ public class Client {
     }
     
     //closes input, output streams and sockets
-    private void disconnect() {
+    public void disconnect() {
         try {
             input.close();
             output.close();
