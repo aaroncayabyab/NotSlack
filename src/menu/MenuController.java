@@ -34,6 +34,7 @@ import javafx.stage.Stage;
  */
 public class MenuController implements Initializable {
     //General variables
+    private Server server = Server.getInstance();
     private Client client;
 
     @FXML
@@ -79,8 +80,10 @@ public class MenuController implements Initializable {
                 loginPane.setVisible(false);    
                 menuPane.setVisible(true);
                 welcomeText.setText("Hi, " + user +"!");
-
-                userList.setItems(FXCollections.observableArrayList(Server.getInstance().getUserList()));              
+                
+                ArrayList<String> copied = new ArrayList<>(Server.getInstance().getUserList());
+                System.out.println(copied);
+                userList.setItems(FXCollections.observableArrayList(copied));              
             }
         }
 
@@ -114,13 +117,9 @@ public class MenuController implements Initializable {
     
     @FXML
     public void onMessageUser(Event event) {
-        try {
-            Chat chat = new Chat();
-            Stage stage = new Stage();
-            chat.start(stage);
-        } catch (IOException ex) {
-            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }    
+        System.out.println(Server.getInstance().getUserList());
+        client.send("getActiveUsers");
+        System.out.println(client.getLatestMessage());
     }
     
      public Client getClient() {
@@ -132,6 +131,7 @@ public class MenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
     }  
     
 

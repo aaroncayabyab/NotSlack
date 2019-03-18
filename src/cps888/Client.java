@@ -13,6 +13,8 @@ public class Client {
     private PrintWriter output;
     private BufferedReader input;
     
+    private String latestMessage;
+    
     public Client(String username, String server, int port) {
         this.username = username;
         this.server = server;
@@ -21,6 +23,10 @@ public class Client {
     
     public String getUsername() {
         return this.username;
+    }
+    
+    public String getLatestMessage() {
+        return latestMessage;
     }
     
     //intializing sockets and streams
@@ -57,7 +63,7 @@ public class Client {
     }
     
     // send message to server to relay to intended users
-    private void send(String message) {
+    public void send(String message) {
         try {
             output.println(message);
         } catch(Exception e) {
@@ -128,7 +134,7 @@ public class Client {
             try {
                 String serverMsg;
                 while ((serverMsg = input.readLine()) != null) {
-                    System.out.println(serverMsg);
+                    latestMessage = serverMsg;
                 }
             } catch (IOException e) {
                 System.out.println("Server connection closed:" + e);

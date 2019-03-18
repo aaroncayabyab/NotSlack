@@ -26,6 +26,7 @@ public class Server {
     }
     
     private Server(int port) {
+        instance = this;
         this.port = port;
         workers = new ArrayList<>();
         users = new ArrayList<>();
@@ -33,7 +34,7 @@ public class Server {
     }
     //----------------------------------------------------------------------------------------------------
     //User List methods
-    public static ArrayList<String> getUserList() {
+    public ArrayList<String> getUserList() {
         return users;
     }
     

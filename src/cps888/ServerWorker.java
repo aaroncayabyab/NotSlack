@@ -3,6 +3,7 @@ package cps888;
 import java.io.*;
 import java.net.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -154,7 +155,7 @@ public class ServerWorker extends Thread {
                 System.out.println(this.username + " has left the chat room and is offline");
                 
                 //remove user from arraylist
-                Server.getInstance().addUserToList(this.username);
+                Server.getInstance().removeUserFromList(this.username);
                 
                 connected = false;
             } else if(tokens[0].equalsIgnoreCase("getActiveUsers")) {
