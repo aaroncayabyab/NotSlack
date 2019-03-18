@@ -6,17 +6,22 @@
 package menu;
 
 import cps888.Client;
+import cps888.Server;
 import chat.Chat;
 import java.io.IOException;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -30,6 +35,7 @@ import javafx.stage.Stage;
 public class MenuController implements Initializable {
     //General variables
     private Client client;
+
     @FXML
     private Text errMsg; 
     
@@ -44,6 +50,8 @@ public class MenuController implements Initializable {
     private Pane menuPane;  
     @FXML
     private Text welcomeText;
+    @FXML
+    private ListView<String> userList;
     
     //Create Room Pane
     @FXML
@@ -71,6 +79,8 @@ public class MenuController implements Initializable {
                 loginPane.setVisible(false);    
                 menuPane.setVisible(true);
                 welcomeText.setText("Hi, " + user +"!");
+
+                userList.setItems(FXCollections.observableArrayList(Server.getInstance().getUserList()));              
             }
         }
 
@@ -104,7 +114,13 @@ public class MenuController implements Initializable {
     
     @FXML
     public void onMessageUser(Event event) {
-        
+        try {
+            Chat chat = new Chat();
+            Stage stage = new Stage();
+            chat.start(stage);
+        } catch (IOException ex) {
+            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }    
     }
     
      public Client getClient() {

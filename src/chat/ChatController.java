@@ -7,7 +7,11 @@ package chat;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -15,7 +19,19 @@ import javafx.fxml.Initializable;
  * @author aacay
  */
 public class ChatController implements Initializable {
-
+    
+    @FXML
+    ListView<String> activeList;
+    @FXML
+    ListView<String> messageList;
+    @FXML
+    TextField messageField;
+    
+    @FXML
+    public void onSendMessage(Event event) {
+        //get value from message field
+        //create and add value to arraylist, value = name, date, message
+    }
     /**
      * Initializes the controller class.
      */

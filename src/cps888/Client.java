@@ -67,6 +67,8 @@ public class Client {
     
     public static void main(String[] args) {
         try {
+            Server server = Server.getInstance();
+            System.out.println(server.getUserList());
             Scanner scan = new Scanner(System.in);
             String username;
             

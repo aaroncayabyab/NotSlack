@@ -11,7 +11,7 @@ public class ServerWorker extends Thread {
     private Socket clientSocket;
     private String username;
     private HashSet<String> groups = new HashSet<>();
-  
+
     private PrintWriter output;
     private BufferedReader input;
     private final SimpleDateFormat dateFormatter;
@@ -30,6 +30,9 @@ public class ServerWorker extends Thread {
             this.username = input.readLine();
             System.out.println(this.username + " is now online");
             broadcast(this.username, "online");
+            
+            //Add user to list
+            Server.getInstance().addUserToList(this.username);
             
         } catch(IOException e) {
             System.out.println("Error setting up streams: " + e);
@@ -149,6 +152,10 @@ public class ServerWorker extends Thread {
             
             if(tokens[0].equalsIgnoreCase("logout")) {
                 System.out.println(this.username + " has left the chat room and is offline");
+                
+                //remove user from arraylist
+                Server.getInstance().addUserToList(this.username);
+                
                 connected = false;
             } else if(tokens[0].equalsIgnoreCase("getActiveUsers")) {
                 this.server.getWorkers().stream().forEach((worker) -> {

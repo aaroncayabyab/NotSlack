@@ -52,7 +52,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="sendMsgBtn" mnemonicParsing="false" text="Send" />
+                  <Button fx:id="sendMsgBtn" mnemonicParsing="false" onAction="#onSendMessage" text="Send" />
                </children>
             </HBox>
          </children>
