@@ -3,10 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/Users/jagmeetcheema/Desktop/NotSlack/test/TestClient.java</file>
             <file>file:/Users/jagmeetcheema/Desktop/NotSlack/src/cps888/Client.java</file>
             <file>file:/Users/jagmeetcheema/Desktop/NotSlack/src/cps888/ServerWorker.java</file>
             <file>file:/Users/jagmeetcheema/Desktop/NotSlack/src/cps888/Server.java</file>
+=======
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/menu/Menu.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/cps888/ServerWorker.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/chat/Chat.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/chat/ChatView.fxml</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/cps888/Client.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/chat/Chat.css</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/menu/MenuController.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/chat/ChatController.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/menu/Menu.css</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/cps888/Server.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/menu/MenuView.fxml</file>
+>>>>>>> aaron
         </group>
     </open-files>
 </project-private>

@@ -1,19 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cps888;
 
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
-
-/**
- *
- * @author Ragulan
- */
 public class Client {
     private final String username;
     private final String server;
@@ -56,7 +46,7 @@ public class Client {
     }
     
     //closes input, output streams and sockets
-    private void disconnect() {
+    public void disconnect() {
         try {
             input.close();
             output.close();
@@ -66,6 +56,7 @@ public class Client {
         }
     }
     
+    // send message to server to relay to intended users
     private void send(String message) {
         try {
             output.println(message);
@@ -76,13 +67,25 @@ public class Client {
     
     public static void main(String[] args) {
         try {
+            Server server = Server.getInstance();
+            System.out.println(server.getUserList());
             Scanner scan = new Scanner(System.in);
             String username;
-		
-            System.out.println("Enter your guest login: ");
+            
+            System.out.println("Enter your guest username: ");
             username = scan.nextLine();
             
             Client client = new Client(username, "localhost", 5000);
+            
+            ChatDatabase cb = new ChatDatabase();
+            // establish database connection
+            cb.connect();
+            int userCount = cb.checkUser(username);
+            
+            // if user does not exist in database, insert user information into database
+            if (userCount == 0) {
+                cb.insertUser(username);
+            }
             
             if(!client.start())
                 return;
@@ -98,7 +101,8 @@ public class Client {
             
             //continually reads in input entered by the client
             while(true) {
-                System.out.print("->");
+                //change to system.out.println?
+                System.out.print("->"); 
                 String msg = scan.nextLine();
                 
                 if(msg.equalsIgnoreCase("logout")) {
@@ -110,7 +114,7 @@ public class Client {
             }
             scan.close();
             client.disconnect();
-            
+            cb.closeConnection();
         } catch(Exception e) {
             System.out.println(e);
         }
@@ -128,9 +132,7 @@ public class Client {
                 }
             } catch (IOException e) {
                 System.out.println("Server connection closed:" + e);
-            }
-            
+            } 
         }
-    }
-    
+    }  
 }
