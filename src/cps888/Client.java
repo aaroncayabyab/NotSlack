@@ -94,7 +94,8 @@ public class Client {
             System.out.println("3. Type 'getActiveUsers' to see all online users");
             System.out.println("4. Type 'join #groupName in order to join a group");
             System.out.println("5. Type #groupName msg in order to message a group");
-            System.out.println("4. Type 'logout' in order to leave chatroom");
+            System.out.println("6. Type 'getChatRooms' to see all rooms created");
+            System.out.println("7. Type 'logout' in order to leave chatroom");
             
             //continually reads in input entered by the client
             while(true) {

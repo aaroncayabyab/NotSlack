@@ -16,6 +16,7 @@ import java.util.*;
 
 public class Server {
     private final ArrayList<ServerWorker> workers;
+    private final ArrayList<String> chatRooms;
     private final int port;
     private ServerSocket serverSocket;
     
@@ -23,6 +24,15 @@ public class Server {
     public Server(int port) {
         this.port = port;
         workers = new ArrayList<>();
+        chatRooms = new ArrayList<>();
+    }
+    
+    public ArrayList<String> getChatRooms() {
+        return this.chatRooms;
+    }
+    
+    public void addChatRoom(String room) {
+        this.chatRooms.add(room);
     }
     
     public ArrayList<ServerWorker> getWorkers() {

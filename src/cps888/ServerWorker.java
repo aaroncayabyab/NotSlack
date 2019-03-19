@@ -154,8 +154,13 @@ public class ServerWorker extends Thread {
                 this.server.getWorkers().stream().forEach((worker) -> {
                     send(worker.getUsername());
                 });
+            } else if(tokens[0].equalsIgnoreCase("getChatRooms")) {
+                this.server.getChatRooms().stream().forEach((room) -> {
+                    send(room);
+                });
             } else if(tokens[0].equals("join")) { //joining a group case
                 this.groups.add(tokens[1].substring(1));
+                this.server.addChatRoom(tokens[1].substring(1));
             } else if(tokens[0].charAt(0) == '#') { //messaging a group case
                 broadcast(this.username, message);
             } else if(tokens[0].charAt(0) == '@'){ //direct messaging case
