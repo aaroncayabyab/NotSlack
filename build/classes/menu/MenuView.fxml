@@ -39,9 +39,15 @@
                   <ListView fx:id="userList" prefHeight="200.0" prefWidth="200.0" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                      <children>
-                        <Button fx:id="dmBtn" mnemonicParsing="false" onAction="#onMessageUser" text="Message" />
+                        
                      </children>
                   </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Button fx:id="dmBtn" mnemonicParsing="false" onAction="#onMessageUser" text="Message" />
+                        <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#onRefresh" text="Refresh" />
+                     </children>
+                  </HBox>                  
                </children>
             </VBox>
          </right>

@@ -86,10 +86,20 @@ public class MenuController implements Initializable {
                 client.send("getActiveUsers");
                 Thread.sleep(500);
                 System.out.println(client.getUserList());
-                userList.setItems(FXCollections.observableArrayList(client.getUserList()));              
+                userList.setItems(FXCollections.observableArrayList(client.getUserList())); 
+                
+                //TODO: also load getchatrooms
+                
             }
         }
 
+    }
+    
+    @FXML
+    public void onRefresh(Event event) throws InterruptedException {                       
+        client.send("getActiveUsers");            
+        Thread.sleep(500);
+        userList.setItems(FXCollections.observableArrayList(client.getUserList()));
     }
 
     @FXML
@@ -100,7 +110,13 @@ public class MenuController implements Initializable {
     
     @FXML
     public void onCreateRoom(Event event) {
+        //Add room to list
         String roomName = roomField.getText();
+        client.getRoomList().add(roomName);
+        
+        ObservableList rooms = FXCollections.observableArrayList(client.getRoomList());
+        roomList.setItems(rooms);
+        
         createRoomPane.setVisible(false);
         menuPane.setVisible(true);
         
@@ -110,8 +126,9 @@ public class MenuController implements Initializable {
     @FXML
     public void onJoin(Event event) {
         String room = roomList.getSelectionModel().getSelectedItem();
+        client.send("join #" +room);
         try {
-            Chat chat = new Chat(room, this);
+            Chat chat = new Chat(room, this, true);
             Stage stage = new Stage();
             chat.start(stage);
         } catch (IOException ex) {
@@ -123,7 +140,7 @@ public class MenuController implements Initializable {
     public void onMessageUser(Event event) {
          String dm = userList.getSelectionModel().getSelectedItem();
          try {
-            Chat chat = new Chat(dm, this);
+            Chat chat = new Chat(dm, this, false);
             Stage stage = new Stage();
             chat.start(stage);
         } catch (IOException ex) {

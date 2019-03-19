@@ -3,7 +3,7 @@ package cps888;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Scanner;
 
 public class Client {
@@ -20,7 +20,7 @@ public class Client {
     private String bcMsg;
     private static ArrayList<String> users;
     private static ArrayList<String> rooms;
-    private HashMap<String, ArrayList<String>> messages;
+    private static Hashtable<String, ArrayList<String>> messages;
     
     public Client(String username, String server, int port) {
         this.username = username;
@@ -28,6 +28,7 @@ public class Client {
         this.port = port;
         users = new ArrayList<>();
         rooms = new ArrayList<>();
+        messages = new Hashtable<>();
     }
     
     public String getUsername() {
@@ -52,6 +53,7 @@ public class Client {
     public ArrayList<String> getMessageList(String chatName) {
         return messages.get(chatName);
     }
+    
     
     //--------------------------------------------------------------------------------------------------------------------------------
     
@@ -108,15 +110,15 @@ public class Client {
             
             Client client = new Client(username, "localhost", 5000);
             
-            //ChatDatabase cb = new ChatDatabase();
-            // establish database connection
-            //cb.connect();
-            //int userCount = cb.checkUser(username);
-            
-            // if user does not exist in database, insert user information into database
-            //if (userCount == 0) {
-              //  cb.insertUser(username);
-            //}
+//            ChatDatabase cb = new ChatDatabase();
+//            // establish database connection
+//            cb.connect();
+//            int userCount = cb.checkUser(username);
+//            
+//            // if user does not exist in database, insert user information into database
+//            if (userCount == 0) {
+//                cb.insertUser(username);
+//            }
             
             if(!client.start())
                 return;
@@ -128,7 +130,8 @@ public class Client {
             System.out.println("3. Type 'getActiveUsers' to see all online users");
             System.out.println("4. Type 'join #groupName in order to join a group");
             System.out.println("5. Type #groupName msg in order to message a group");
-            System.out.println("4. Type 'logout' in order to leave chatroom");
+            System.out.println("6. Type 'getChatRooms' to see all rooms created");
+            System.out.println("7. Type 'logout' in order to leave chatroom");
             
             //continually reads in input entered by the client
             while(true) {
@@ -144,7 +147,7 @@ public class Client {
                 } else {
                     client.send(msg);
                 }
-                System.out.print(users);
+                System.out.print(messages.get("user6"));
             }
             scan.close();
             client.disconnect();
@@ -168,14 +171,41 @@ public class Client {
                             users.remove(username);
                         }
                         else if(sentMsg.equals("getActiveUsers")) {
+                            //TODO: ends up adding "YYYY-MM-DD [user]:online
+                            if(users.contains(bcMsg)) {
+                                continue;
+                            }
                             users.add(bcMsg);
+                        }
+                        else if(sentMsg.equals("getChatRooms")) {
+                            if(rooms.contains(bcMsg)){
+                                continue;
+                            }
+                            rooms.add(bcMsg);
                         }
                         else if(sentMsg.indexOf("@") == 0) {
                             //directmessage
+                            //TODO: FIX, messages "hashtable" returning null value but should return arraylist
+                            //TODO: Save both 'my message' and 'other user message' into arraylist
+                            String[] body = bcMsg.split(" ", 2);
+                            String chatID = body[0].substring(1);
+                            String msg = body[1];
+
+                            messages.putIfAbsent(chatID, new ArrayList<String>());
+                            messages.get(chatID).add(chatID + ": " + msg);
                         }
                         else if(sentMsg.indexOf("#") == 0) {
-                            //group created
-                            rooms.add(bcMsg);
+                            //group message
+                            //TODO: FIX messages "hashtable" returning null but should return arraylist
+                            //TODO: No way of adding properly adding rooms yet, I'm just adding a list entry visually, but this can work too, kinda
+                            String[] body = bcMsg.split(" ", 2);
+                            String chatID = body[0].substring(1);
+                            String msg = body[1];
+                            if(messages.get(chatID) == null) {
+                                messages.put(chatID, new ArrayList<>());
+                            }
+                            messages.get(chatID).add(chatID + ": " + msg);
+                                                       
                         }
                       }
                  

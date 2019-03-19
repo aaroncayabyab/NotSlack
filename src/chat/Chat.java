@@ -20,9 +20,12 @@ import javafx.stage.Stage;
 public class Chat extends Application {
     String chatName;
     MenuController clientMC;
-    public Chat(String chatName, MenuController mc) {
+    boolean isChatRoom;
+    
+    public Chat(String chatName, MenuController mc, boolean isChatRoom) {
         this.chatName = chatName;
         this.clientMC = mc;
+        this.isChatRoom = isChatRoom;
     }
     @Override
     public void start(Stage stage) throws IOException {
@@ -31,6 +34,7 @@ public class Chat extends Application {
         ChatController controller = fxmlLoader.<ChatController>getController();
         controller.setMenuController(clientMC);
         controller.setRoomName(chatName);
+        controller.setChatConfig(isChatRoom);
         
         Scene scene = new Scene(root);
         stage.setTitle("NotSlack");

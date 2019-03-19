@@ -17,7 +17,7 @@ public class ServerWorker extends Thread {
     private BufferedReader input;
     private final SimpleDateFormat dateFormatter;
     
-    ChatDatabase cb = new ChatDatabase();
+//    ChatDatabase cb = new ChatDatabase();
     
     public ServerWorker(Server server, Socket clientSocket) {
         this.server = server;
@@ -102,14 +102,14 @@ public class ServerWorker extends Thread {
             isDirectMessage = true;
             sendTo = tokens[0].substring(1);
             msg = datetime + " " + from + ": " + tokens[1];
-            // establish database connection
-            cb.connect();
-            // obtain user id of sender
-            int sender = cb.getUserRow(from);
-            // obtain user id of receiver
-            int receiver = cb.getUserRow(sendTo);
-            // pass user id of sender and receiver, message, datetime to database
-            cb.insertChatMessage(sender, receiver, tokens[1], datetime);
+//            // establish database connection
+//            cb.connect();
+//            // obtain user id of sender
+//            int sender = cb.getUserRow(from);
+//            // obtain user id of receiver
+//            int receiver = cb.getUserRow(sendTo);
+//            // pass user id of sender and receiver, message, datetime to database
+//            cb.insertChatMessage(sender, receiver, tokens[1], datetime);
         }
         //messaging a group case
         if(tokens[0].charAt(0) == '#') {
@@ -155,6 +155,10 @@ public class ServerWorker extends Thread {
             } else if(tokens[0].equalsIgnoreCase("getActiveUsers")) {
                 this.server.getWorkers().stream().forEach((worker) -> {
                     send(worker.getUsername());
+                });
+            } else if(tokens[0].equalsIgnoreCase("getChatRooms")) {
+                this.server.getChatRooms().stream().forEach((room) -> {
+                    send(room);
                 });
             } else if(tokens[0].equals("join")) { //joining a group case
                 this.groups.add(tokens[1].substring(1));

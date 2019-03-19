@@ -35,11 +35,10 @@ public class Menu extends Application {
     
     @Override
     public void stop() throws Exception {
-        if(mc.getClient() != null)
+        if(mc.getClient() != null) {
+            mc.getClient().send("logout");
             mc.getClient().disconnect();
-
-        
-        
+        }
     }
     /**
      * @param args the command line arguments
