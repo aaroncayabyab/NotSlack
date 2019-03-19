@@ -32,50 +32,7 @@ public class Server {
         users = new ArrayList<>();
         
     }
-    //----------------------------------------------------------------------------------------------------
-    //User List methods
-    public ArrayList<String> getUserList() {
-        return users;
-    }
-    
-    public void addUserToList(String user) {
-        users.add(user);
-        System.out.println(user +" added to userlist.");
-    }
-    
-    public void removeUserFromList(String user) {
-        users.remove(user);
-        System.out.println(user +" removed from userlist.");
-    }
-    
-    //Room List methods  
-    public ArrayList<String> getRoomList() {
-        return Server.rooms;
-    }
-    
-    public void addRoomToList(String room) {
-        rooms.add(room);
-        System.out.println(room +" added to roomlist.");
-    }
-    
-    public void removeRoomFromList(String room) {
-        rooms.remove(room);
-        System.out.println(room +" removed from roomlist.");
-    }
-    
-    //Messages methods
-    public ArrayList<String> getMessageList(String chatName) {
-        return messages.get(chatName);
-    }
-    
-    public void addMessageToList(String chatName, String msg) {
-        if(messages.get(chatName) == null) {
-            messages.put(chatName, new ArrayList<>());
-        }
-        messages.get(chatName).add(msg);
-    }
-    //--------------------------------------------------------------------------------------------------------------------------------
-    
+
     public ArrayList<ServerWorker> getWorkers() {
         return this.workers;
     }
@@ -90,7 +47,6 @@ public class Server {
                 ServerWorker worker = new ServerWorker(this, socket);
                 this.workers.add(worker);
                 worker.start();
-                System.out.println(getUserList());
             }     
         } catch(IOException e) {
             System.out.println("Error starting server: " + e);

@@ -5,6 +5,7 @@
  */
 package chat;
 
+import menu.MenuController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +18,20 @@ import javafx.stage.Stage;
  * @author aacay
  */
 public class Chat extends Application {
-    
+    String chatName;
+    MenuController clientMC;
+    public Chat(String chatName, MenuController mc) {
+        this.chatName = chatName;
+        this.clientMC = mc;
+    }
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ChatView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ChatView.fxml"));
+        Parent root = (Parent)fxmlLoader.load();
+        ChatController controller = fxmlLoader.<ChatController>getController();
+        controller.setMenuController(clientMC);
+        controller.setRoomName(chatName);
+        
         Scene scene = new Scene(root);
         stage.setTitle("NotSlack");
         stage.setScene(scene);

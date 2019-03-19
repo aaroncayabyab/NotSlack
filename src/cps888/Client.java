@@ -2,6 +2,8 @@ package cps888;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Client {
@@ -13,21 +15,45 @@ public class Client {
     private PrintWriter output;
     private BufferedReader input;
     
-    private String latestMessage;
+    //Frontend integration
+    private static String sentMsg;
+    private String bcMsg;
+    private static ArrayList<String> users;
+    private static ArrayList<String> rooms;
+    private HashMap<String, ArrayList<String>> messages;
     
     public Client(String username, String server, int port) {
         this.username = username;
         this.server = server;
         this.port = port;
+        users = new ArrayList<>();
+        rooms = new ArrayList<>();
     }
     
     public String getUsername() {
         return this.username;
     }
     
-    public String getLatestMessage() {
-        return latestMessage;
+    public String getMessage() {
+        return bcMsg;
     }
+    //----------------------------------------------------------------------------------------------------
+    //User List methods
+    public ArrayList<String> getUserList() {
+        return users;
+    }
+    
+    //Room List methods  
+    public ArrayList<String> getRoomList() {
+        return rooms;
+    }
+    
+    //Messages methods
+    public ArrayList<String> getMessageList(String chatName) {
+        return messages.get(chatName);
+    }
+    
+    //--------------------------------------------------------------------------------------------------------------------------------
     
     //intializing sockets and streams
     public boolean start() {
@@ -65,6 +91,7 @@ public class Client {
     // send message to server to relay to intended users
     public void send(String message) {
         try {
+            sentMsg = message;
             output.println(message);
         } catch(Exception e) {
             System.out.println("Failed to send message: " + e);
@@ -73,8 +100,6 @@ public class Client {
     
     public static void main(String[] args) {
         try {
-            Server server = Server.getInstance();
-            System.out.println(server.getUserList());
             Scanner scan = new Scanner(System.in);
             String username;
             
@@ -83,15 +108,15 @@ public class Client {
             
             Client client = new Client(username, "localhost", 5000);
             
-            ChatDatabase cb = new ChatDatabase();
+            //ChatDatabase cb = new ChatDatabase();
             // establish database connection
-            cb.connect();
-            int userCount = cb.checkUser(username);
+            //cb.connect();
+            //int userCount = cb.checkUser(username);
             
             // if user does not exist in database, insert user information into database
-            if (userCount == 0) {
-                cb.insertUser(username);
-            }
+            //if (userCount == 0) {
+              //  cb.insertUser(username);
+            //}
             
             if(!client.start())
                 return;
@@ -110,17 +135,20 @@ public class Client {
                 //change to system.out.println?
                 System.out.print("->"); 
                 String msg = scan.nextLine();
+                sentMsg = msg;
                 
                 if(msg.equalsIgnoreCase("logout")) {
                     client.send("logout");
-                    break;	
+                    break;
+                    
                 } else {
                     client.send(msg);
                 }
+                System.out.print(users);
             }
             scan.close();
             client.disconnect();
-            cb.closeConnection();
+            //cb.closeConnection();
         } catch(Exception e) {
             System.out.println(e);
         }
@@ -134,7 +162,24 @@ public class Client {
             try {
                 String serverMsg;
                 while ((serverMsg = input.readLine()) != null) {
-                    latestMessage = serverMsg;
+                    bcMsg = serverMsg;
+                      if(sentMsg!=null) {
+                        if(sentMsg.equals("logout")) {
+                            users.remove(username);
+                        }
+                        else if(sentMsg.equals("getActiveUsers")) {
+                            users.add(bcMsg);
+                        }
+                        else if(sentMsg.indexOf("@") == 0) {
+                            //directmessage
+                        }
+                        else if(sentMsg.indexOf("#") == 0) {
+                            //group created
+                            rooms.add(bcMsg);
+                        }
+                      }
+                 
+                    System.out.println(bcMsg);
                 }
             } catch (IOException e) {
                 System.out.println("Server connection closed:" + e);

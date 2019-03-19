@@ -32,9 +32,6 @@ public class ServerWorker extends Thread {
             System.out.println(this.username + " is now online");
             broadcast(this.username, "online");
             
-            //Add user to list
-            Server.getInstance().addUserToList(this.username);
-            
         } catch(IOException e) {
             System.out.println("Error setting up streams: " + e);
         }
@@ -153,9 +150,6 @@ public class ServerWorker extends Thread {
             
             if(tokens[0].equalsIgnoreCase("logout")) {
                 System.out.println(this.username + " has left the chat room and is offline");
-                
-                //remove user from arraylist
-                Server.getInstance().removeUserFromList(this.username);
                 
                 connected = false;
             } else if(tokens[0].equalsIgnoreCase("getActiveUsers")) {
