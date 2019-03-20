@@ -3,7 +3,9 @@ package cps888;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Client {
@@ -20,7 +22,7 @@ public class Client {
     private String bcMsg;
     private static ArrayList<String> users;
     private static ArrayList<String> rooms;
-    private static Hashtable<String, ArrayList<String>> messages;
+    private static Map<String, ArrayList<String>> messages;
     
     public Client(String username, String server, int port) {
         this.username = username;
@@ -28,7 +30,7 @@ public class Client {
         this.port = port;
         users = new ArrayList<>();
         rooms = new ArrayList<>();
-        messages = new Hashtable<>();
+        messages = new HashMap<>();
     }
     
     public String getUsername() {
@@ -147,7 +149,6 @@ public class Client {
                 } else {
                     client.send(msg);
                 }
-                System.out.print(messages.get("user6"));
             }
             scan.close();
             client.disconnect();
@@ -171,8 +172,7 @@ public class Client {
                             users.remove(username);
                         }
                         else if(sentMsg.equals("getActiveUsers")) {
-                            //TODO: ends up adding "YYYY-MM-DD [user]:online
-                            if(users.contains(bcMsg)) {
+                            if(users.contains(bcMsg) || username.equals(bcMsg)) {
                                 continue;
                             }
                             users.add(bcMsg);
@@ -185,26 +185,21 @@ public class Client {
                         }
                         else if(sentMsg.indexOf("@") == 0) {
                             //directmessage
-                            //TODO: FIX, messages "hashtable" returning null value but should return arraylist
-                            //TODO: Save both 'my message' and 'other user message' into arraylist
-                            String[] body = bcMsg.split(" ", 2);
-                            String chatID = body[0].substring(1);
-                            String msg = body[1];
-
-                            messages.putIfAbsent(chatID, new ArrayList<String>());
-                            messages.get(chatID).add(chatID + ": " + msg);
+                            String chatID = sentMsg.split(" ")[0].substring(1);
+                            messages.putIfAbsent(chatID, new ArrayList<>());
+                            messages.get(chatID).add(bcMsg);
                         }
                         else if(sentMsg.indexOf("#") == 0) {
                             //group message
-                            //TODO: FIX messages "hashtable" returning null but should return arraylist
-                            //TODO: No way of adding properly adding rooms yet, I'm just adding a list entry visually, but this can work too, kinda
-                            String[] body = bcMsg.split(" ", 2);
-                            String chatID = body[0].substring(1);
-                            String msg = body[1];
-                            if(messages.get(chatID) == null) {
+                            String chatID = sentMsg.split(" ", 2)[0].substring(1);
+                            String msg = bcMsg;
+                            if(!messages.containsKey(chatID)) {
                                 messages.put(chatID, new ArrayList<>());
                             }
                             messages.get(chatID).add(chatID + ": " + msg);
+                            //just for testing purpooses delete later
+                            System.out.println(chatID);
+                            System.out.println(messages.get(chatID));
                                                        
                         }
                       }

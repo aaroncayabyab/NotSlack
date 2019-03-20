@@ -29,9 +29,7 @@ public class ServerWorker extends Thread {
             this.output = new PrintWriter(this.clientSocket.getOutputStream(), true);
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
             this.username = input.readLine();
-            System.out.println(this.username + " is now online");
-            broadcast(this.username, "online");
-            
+            System.out.println(this.username + " is now online");            
         } catch(IOException e) {
             System.out.println("Error setting up streams: " + e);
         }
@@ -115,7 +113,7 @@ public class ServerWorker extends Thread {
         if(tokens[0].charAt(0) == '#') {
             isGroup = true;
             group = tokens[0].substring(1);
-            msg = group + " " + datetime + " " + from + ": " + tokens[1];
+            msg = datetime + " " + from + ": " + tokens[1];
         }
         
         //iterates through all workers and finds worker whose username matches
@@ -124,9 +122,8 @@ public class ServerWorker extends Thread {
             if(!worker.isConnected()) {
                 this.server.getWorkers().remove(worker);
                 System.out.println(worker.getUsername() + " has disconnected");
-            } else if(isDirectMessage && worker.getUsername().equals(sendTo)) { // direct message case
+            } else if(isDirectMessage && (worker.getUsername().equals(sendTo) || worker.getUsername().equals(from))) { // direct message case
                  worker.send(msg);
-                break;
             } else if(!isGroup || (isGroup && worker.isMemberOfGroup(group))) { // group or all case
                 worker.send(msg);
             }
