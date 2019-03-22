@@ -29,6 +29,7 @@ public class ServerWorker extends Thread {
             this.output = new PrintWriter(this.clientSocket.getOutputStream(), true);
             this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
             this.username = input.readLine();
+            broadcast("", "online");
             System.out.println(this.username + " is now online");            
         } catch(IOException e) {
             System.out.println("Error setting up streams: " + e);
@@ -99,7 +100,7 @@ public class ServerWorker extends Thread {
         if(tokens[0].charAt(0) == '@') {
             isDirectMessage = true;
             sendTo = tokens[0].substring(1);
-            msg = datetime + " " + from + ": " + tokens[1];
+            msg = from + " " + datetime + " " + from + ": " + tokens[1];
 //            // establish database connection
 //            cb.connect();
 //            // obtain user id of sender
@@ -113,8 +114,9 @@ public class ServerWorker extends Thread {
         if(tokens[0].charAt(0) == '#') {
             isGroup = true;
             group = tokens[0].substring(1);
-            msg = datetime + " " + from + ": " + tokens[1];
+            msg = group + " " + datetime + " " + from + ": " + tokens[1];
         }
+        if(from.equals("")) msg = message;
         
         //iterates through all workers and finds worker whose username matches
         for(ServerWorker worker: this.server.getWorkers()) {
@@ -146,13 +148,18 @@ public class ServerWorker extends Thread {
             String tokens [] = message.split(" ", 2);
             
             if(tokens[0].equalsIgnoreCase("logout")) {
+                broadcast("", "offline " + this.username);
                 System.out.println(this.username + " has left the chat room and is offline");
                 
                 connected = false;
             } else if(tokens[0].equalsIgnoreCase("getActiveUsers")) {
-                this.server.getWorkers().stream().forEach((worker) -> {
-                    send(worker.getUsername());
-                });
+                String res = "";
+                for(ServerWorker worker: this.server.getWorkers()) {
+                    res += worker.getUsername() + ":";
+                }
+                res = res.substring(0, res.length() -1);
+                send(res);
+                
             } else if(tokens[0].equalsIgnoreCase("getChatRooms")) {
                 this.server.getChatRooms().stream().forEach((room) -> {
                     send(room);

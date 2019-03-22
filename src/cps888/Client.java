@@ -169,14 +169,17 @@ public class Client {
                 while ((serverMsg = input.readLine()) != null) {
                     bcMsg = serverMsg;
                       if(sentMsg!=null) {
-                        if(sentMsg.equals("logout")) {
-                            users.remove(username);
-                        }
-                        else if(sentMsg.equals("getActiveUsers")) {
-                            if(users.contains(bcMsg) || username.equals(bcMsg)) {
-                                continue;
+                        if(sentMsg.equals("getActiveUsers")) {
+                            System.out.println("USERS!!!");
+                            System.out.println(bcMsg);
+                            String names [] = bcMsg.split(":");
+                            for(String name: names) {
+                                if(users.contains(name) || username.equals(name)) {
+                                    continue;
+                                } 
+                                users.add(name);
                             }
-                            users.add(bcMsg);
+                        
                         }
                         else if(sentMsg.equals("getChatRooms")) {
                             if(rooms.contains(bcMsg)){
@@ -197,8 +200,19 @@ public class Client {
                             messages.get(chatID).add(bcMsg);
                                                        
                         }
+                        sentMsg = null;
+                      } else {
+                          if(bcMsg.equals("online")) {
+                              send("getActiveUsers");
+                          } else if (bcMsg.contains("offline")){
+                              users.remove(bcMsg.split(" ")[1]);
+                          }else {
+                            String split [] = bcMsg.split(" ", 2);
+                            String chatID = split[0];
+                            messages.putIfAbsent(chatID, FXCollections.observableArrayList());
+                            messages.get(chatID).add(split[1]);
+                          }
                       }
-                 
                     System.out.println(bcMsg);
                 }
             } catch (IOException e) {
