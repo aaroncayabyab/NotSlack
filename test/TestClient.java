@@ -6,8 +6,7 @@
 
 
 import cps888.Client;
-import junit.framework.Assert;
-import static org.testng.Assert.*;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -22,43 +21,17 @@ public class TestClient {
     
     private Client client;
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-        // what executes before all your tests are done
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-        // what executes after all your tests are done
-    }
-
     @BeforeMethod
-    public void setUpMethod() throws Exception {
+    public void setUpMethod() {
         client = new Client("Jagmeet", "server", 5000);
-    }
-
-    @AfterMethod
-    public void tearDownMethod() throws Exception {
     }
     
     @Test
     public void testGetUserName()
     {
-        Assert.assertEquals("this failed!", "Jagmeet", client.getUsername());
+        Assert.assertEquals(client.getUsername(), "Jagmeet", "Clients username should be 'Jagmeet'");
     }
-    
-    @Test
-    public void testStart()
-    {
-        // what do you need to thest this?
-        // if too much things are being tested, separate into different methods
-        // dont duplicate your testing
-    }
-    @Test
-    public void testDisconnect()
-    {
-        //Check to see that the client is not connected to the server 
-    }
+
     @Test
     public void testReceivedMessage()
     {

@@ -25,7 +25,7 @@ public class Server {
         return instance;
     }
     
-    private Server(int port) {
+    public Server(int port) {
         this.port = port;
         workers = new ArrayList<>();
         users = new ArrayList<>();
@@ -45,6 +45,10 @@ public class Server {
     public void removeUserFromList(String user) {
         users.remove(user);
         System.out.println(user +" removed from userlist.");
+    }
+    
+    public int getPort(){
+        return port;
     }
     
     //Room List methods  
