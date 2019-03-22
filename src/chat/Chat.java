@@ -5,7 +5,7 @@
  */
 package chat;
 
-import menu.MenuController;
+import cps888.Client;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,20 +19,21 @@ import javafx.stage.Stage;
  */
 public class Chat extends Application {
     String chatName;
-    MenuController clientMC;
+    Client client;
     boolean isChatRoom;
+    ChatController controller;
     
-    public Chat(String chatName, MenuController mc, boolean isChatRoom) {
+    public Chat(String chatName, Client client, boolean isChatRoom) {
         this.chatName = chatName;
-        this.clientMC = mc;
+        this.client = client;
         this.isChatRoom = isChatRoom;
     }
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, InterruptedException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ChatView.fxml"));
         Parent root = (Parent)fxmlLoader.load();
-        ChatController controller = fxmlLoader.<ChatController>getController();
-        controller.setMenuController(clientMC);
+        controller = fxmlLoader.<ChatController>getController();
+        controller.setClient(client);
         controller.setRoomName(chatName);
         controller.setChatConfig(isChatRoom);
         
@@ -41,7 +42,7 @@ public class Chat extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
+    
     /**
      * @param args the command line arguments
      */

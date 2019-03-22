@@ -8,6 +8,9 @@ import menu.MenuController;
 import cps888.Client;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -23,7 +26,6 @@ import javafx.scene.text.Text;
  */
 public class ChatController implements Initializable {
     private Client client;
-    private MenuController mc;
     private boolean isChatRoom;
     private String name;
     
@@ -49,9 +51,8 @@ public class ChatController implements Initializable {
         
         client.send(msg);
         //get value from message field
-        Thread.sleep(2000);
-        System.out.println(client.getMessageList(name));
-        messageList.setItems(FXCollections.observableArrayList(client.getMessageList(name)));
+        Thread.sleep(100);
+        messageList.setItems(client.getMessageList(name));
         
         messageField.clear();
         //create and add value to arraylist, value = name, date, message
@@ -61,17 +62,36 @@ public class ChatController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String msg = "";
+                    if(!isChatRoom) {
+                        msg = "@"+name+" has joined the chat.";
+                    }
+                    else {
+                        msg = "#"+name+" has joined the chat.";
+                    }
+                    client.send(msg);
+
+                    Thread.sleep(100);
+                    messageList.setItems(client.getMessageList(name));
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+        });
     } 
     
-    public void setMenuController(MenuController mc) {
-        this.mc = mc;
-        client = mc.getClient();
-                
+    public void setClient(Client client) {
+        this.client = client;
+        
         //get active users
-        activeList.setItems(FXCollections.observableArrayList(client.getUserList()));
+        activeList.setItems(client.getUserList());
         
-        
+       
     }
     
     public void setRoomName(String name) {

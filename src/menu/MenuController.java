@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -86,7 +87,7 @@ public class MenuController implements Initializable {
                 client.send("getActiveUsers");
                 Thread.sleep(500);
                 System.out.println(client.getUserList());
-                userList.setItems(FXCollections.observableArrayList(client.getUserList())); 
+                userList.setItems(client.getUserList()); 
                 
                 //TODO: also load getchatrooms
                 
@@ -98,8 +99,6 @@ public class MenuController implements Initializable {
     @FXML
     public void onRefresh(Event event) throws InterruptedException {                       
         client.send("getActiveUsers");            
-        Thread.sleep(500);
-        userList.setItems(FXCollections.observableArrayList(client.getUserList()));
     }
 
     @FXML
@@ -114,7 +113,7 @@ public class MenuController implements Initializable {
         String roomName = roomField.getText();
         client.getRoomList().add(roomName);
         
-        ObservableList rooms = FXCollections.observableArrayList(client.getRoomList());
+        ObservableList rooms = client.getRoomList();
         roomList.setItems(rooms);
         
         createRoomPane.setVisible(false);
@@ -124,11 +123,15 @@ public class MenuController implements Initializable {
     }  
     
     @FXML
-    public void onJoin(Event event) {
+    public void onJoin(Event event) throws InterruptedException {
         String room = roomList.getSelectionModel().getSelectedItem();
+        
+        if(room == null || room.equals(""))
+            return;
+        
         client.send("join #" +room);
         try {
-            Chat chat = new Chat(room, this, true);
+            Chat chat = new Chat(room, client, true);
             Stage stage = new Stage();
             chat.start(stage);
         } catch (IOException ex) {
@@ -137,10 +140,10 @@ public class MenuController implements Initializable {
     }
     
     @FXML
-    public void onMessageUser(Event event) {
+    public void onMessageUser(Event event) throws InterruptedException {
          String dm = userList.getSelectionModel().getSelectedItem();
          try {
-            Chat chat = new Chat(dm, this, false);
+            Chat chat = new Chat(dm, client, false);
             Stage stage = new Stage();
             chat.start(stage);
         } catch (IOException ex) {

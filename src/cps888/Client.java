@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Scanner;
+import javafx.collections.*;
 
 public class Client {
     private final String username;
@@ -20,16 +21,16 @@ public class Client {
     //Frontend integration
     private static String sentMsg;
     private String bcMsg;
-    private static ArrayList<String> users;
-    private static ArrayList<String> rooms;
-    private static Map<String, ArrayList<String>> messages;
+    private static ObservableList<String> users;
+    private static ObservableList<String> rooms;
+    private static Map<String, ObservableList<String>> messages;
     
     public Client(String username, String server, int port) {
         this.username = username;
         this.server = server;
         this.port = port;
-        users = new ArrayList<>();
-        rooms = new ArrayList<>();
+        users = FXCollections.observableArrayList();
+        rooms = FXCollections.observableArrayList();
         messages = new HashMap<>();
     }
     
@@ -42,17 +43,17 @@ public class Client {
     }
     //----------------------------------------------------------------------------------------------------
     //User List methods
-    public ArrayList<String> getUserList() {
+    public ObservableList<String> getUserList() {
         return users;
     }
     
     //Room List methods  
-    public ArrayList<String> getRoomList() {
+    public ObservableList<String> getRoomList() {
         return rooms;
     }
     
     //Messages methods
-    public ArrayList<String> getMessageList(String chatName) {
+    public ObservableList<String> getMessageList(String chatName) {
         return messages.get(chatName);
     }
     
@@ -186,20 +187,14 @@ public class Client {
                         else if(sentMsg.indexOf("@") == 0) {
                             //directmessage
                             String chatID = sentMsg.split(" ")[0].substring(1);
-                            messages.putIfAbsent(chatID, new ArrayList<>());
+                            messages.putIfAbsent(chatID, FXCollections.observableArrayList());
                             messages.get(chatID).add(bcMsg);
                         }
                         else if(sentMsg.indexOf("#") == 0) {
                             //group message
-                            String chatID = sentMsg.split(" ", 2)[0].substring(1);
-                            String msg = bcMsg;
-                            if(!messages.containsKey(chatID)) {
-                                messages.put(chatID, new ArrayList<>());
-                            }
-                            messages.get(chatID).add(chatID + ": " + msg);
-                            //just for testing purpooses delete later
-                            System.out.println(chatID);
-                            System.out.println(messages.get(chatID));
+                            String chatID = sentMsg.split(" ")[0].substring(1);
+                            messages.putIfAbsent(chatID, FXCollections.observableArrayList());
+                            messages.get(chatID).add(bcMsg);
                                                        
                         }
                       }
