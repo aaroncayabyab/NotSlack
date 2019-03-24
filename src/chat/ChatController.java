@@ -4,14 +4,12 @@
  * and open the template in the editor.
  */
 package chat;
-import menu.MenuController;
 import cps888.Client;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

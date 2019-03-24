@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+<<<<<<< HEAD
+            <file>file:/Users/aaronc/Documents/Github/cps888/src/cps888/Client.java</file>
+            <file>file:/Users/aaronc/Documents/Github/cps888/src/menu/MenuController.java</file>
+            <file>file:/Users/aaronc/Documents/Github/cps888/src/menu/MenuView.fxml</file>
+            <file>file:/Users/aaronc/Documents/Github/cps888/src/menu/Menu.java</file>
+            <file>file:/Users/aaronc/Documents/Github/cps888/src/cps888/ServerWorker.java</file>
+            <file>file:/Users/aaronc/Documents/Github/cps888/src/chat/ChatController.java</file>
+            <file>file:/Users/aaronc/Documents/Github/cps888/src/cps888/Server.java</file>
+            <file>file:/Users/aaronc/Documents/Github/cps888/src/chat/Chat.java</file>
+            <file>file:/Users/aaronc/Documents/Github/cps888/src/chat/ChatView.fxml</file>
+||||||| merged common ancestors
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/menu/Menu.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/cps888/ServerWorker.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/chat/Chat.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/chat/ChatView.fxml</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/cps888/Client.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/chat/Chat.css</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/menu/MenuController.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/chat/ChatController.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/menu/Menu.css</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/cps888/Server.java</file>
+            <file>file:/C:/Users/aacay/Documents/GitHub/cps888/src/menu/MenuView.fxml</file>
+=======
+            <file>file:/Users/jagmeetcheema/Desktop/NotSlack/test/TestClient.java</file>
+            <file>file:/Users/jagmeetcheema/Desktop/NotSlack/src/cps888/Client.java</file>
+            <file>file:/Users/jagmeetcheema/Desktop/NotSlack/test/TestServer.java</file>
+            <file>file:/Users/jagmeetcheema/Desktop/NotSlack/test/TestChatDatabase.java</file>
+            <file>file:/Users/jagmeetcheema/Desktop/NotSlack/src/cps888/ChatDatabase.java</file>
+            <file>file:/Users/jagmeetcheema/Desktop/NotSlack/src/cps888/ServerWorker.java</file>
+            <file>file:/Users/jagmeetcheema/Desktop/NotSlack/src/cps888/Server.java</file>
+>>>>>>> jagmeet
+        </group>
+    </open-files>
+</project-private>
