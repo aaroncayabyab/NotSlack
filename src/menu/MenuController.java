@@ -109,12 +109,20 @@ public class MenuController implements Initializable {
         //Add room to list
         String roomName = roomField.getText();
         
+        if(roomName == null || roomName.equals("")) {
+            errMsgRoom.setText("Please enter valid room name.");
+            errMsgRoom.setVisible(true);
+            return;
+        }
         if(client.getRoomList().contains(roomName)) {
+            errMsgRoom.setText("Room already exists.");
             errMsgRoom.setVisible(true);
             return;
         }
         
+        
         errMsgRoom.setVisible(false);
+        roomField.clear();
         client.getRoomList().add(roomName);
         
         ObservableList rooms = client.getRoomList();

@@ -95,9 +95,10 @@ public class ChatController implements Initializable {
                 if(click.getClickCount() == 2) {
                     try {
                         String selected = roomList.getSelectionModel().getSelectedItem();
-                                                
+                                             
                         if(selected.equals("") || selected == null || selected.equals(name))
                             return;
+                        client.send("join #" + selected);   
                         Chat chat = new Chat(selected, client, true);
                         Stage stage = new Stage();
                         chat.start(stage);
