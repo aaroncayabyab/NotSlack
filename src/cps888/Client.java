@@ -111,16 +111,6 @@ public class Client {
             
             Client client = new Client(username, "localhost", 5000);
             
-//            ChatDatabase cb = new ChatDatabase();
-//            // establish database connection
-//            cb.connect();
-//            int userCount = cb.checkUser(username);
-//            
-//            // if user does not exist in database, insert user information into database
-//            if (userCount == 0) {
-//                cb.insertUser(username);
-//            }
-            
             if(!client.start())
                 return;
             
@@ -151,7 +141,6 @@ public class Client {
             }
             scan.close();
             client.disconnect();
-            //cb.closeConnection();
         } catch(Exception e) {
             System.out.println(e);
         }

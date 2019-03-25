@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package menu;
+import cps888.ChatDatabase;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
  */
 public class Menu extends Application {
     private MenuController mc;
+    private ChatDatabase cd = new ChatDatabase();
     
     @Override
     public void start(Stage stage) throws IOException {
@@ -35,6 +37,11 @@ public class Menu extends Application {
     public void stop() throws Exception {
         if(mc.getClient() != null) {
             mc.getClient().send("logout");
+            String u = mc.getClient().getUsername();
+            cd.connect();
+            // set user status to offline in db
+            cd.updateUser(u, "offline");
+            cd.closeConnection();
             mc.getClient().disconnect();
         }
     }
