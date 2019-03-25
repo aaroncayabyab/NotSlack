@@ -25,7 +25,8 @@ public class Menu extends Application {
         mc = fxmlLoader.<MenuController>getController();
         
         Scene scene = new Scene(root);
-        
+        scene.getStylesheets().add("menu/Menu.css");
+
         stage.setTitle("NotSlack");
         stage.setScene(scene);
         stage.show();

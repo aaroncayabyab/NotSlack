@@ -38,6 +38,8 @@ public class MenuController implements Initializable {
     @FXML
     private Text errMsg; 
     
+    @FXML
+    private Text errMsgRoom;
     //Login Pane
     @FXML
     private TextField userField;  
@@ -106,6 +108,13 @@ public class MenuController implements Initializable {
     public void onCreateRoom(Event event) {
         //Add room to list
         String roomName = roomField.getText();
+        
+        if(client.getRoomList().contains(roomName)) {
+            errMsgRoom.setVisible(true);
+            return;
+        }
+        
+        errMsgRoom.setVisible(false);
         client.getRoomList().add(roomName);
         
         ObservableList rooms = client.getRoomList();
@@ -137,6 +146,9 @@ public class MenuController implements Initializable {
     @FXML
     public void onMessageUser(Event event) throws InterruptedException {
          String dm = userList.getSelectionModel().getSelectedItem();
+                         
+         if(dm == null || dm.equals(""))
+            return;
          try {
             Chat chat = new Chat(dm, client, false);
             Stage stage = new Stage();

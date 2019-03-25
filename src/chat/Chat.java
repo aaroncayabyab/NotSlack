@@ -38,6 +38,7 @@ public class Chat extends Application {
         controller.setChatConfig(isChatRoom);
         
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("chat/Chat.css");
         stage.setTitle("NotSlack");
         stage.setScene(scene);
         stage.show();

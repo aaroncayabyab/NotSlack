@@ -3,5 +3,44 @@
  */
 
 .mainFxmlClass {
+    -fx-base: #6596C4;
+    -fx-accent: #484848;
 
 }
+
+.button {
+    -fx-text-fill: white;
+}
+
+.text-field {
+    -fx-background-color: -fx-text-box-border, #484848;
+    -fx-text-fill: white;
+}
+
+.list-view {
+    -fx-background-color: #484848;    
+}
+
+#messageList .list-cell{
+    -fx-background-color: #484848;
+    -fx-text-fill: white;
+}
+
+#activeList .list-cell{
+    -fx-background-color: #6596C4;
+    -fx-text-fill: white;
+}
+
+
+#activeList .list-cell:hover {
+    -fx-background-color: #608eba;
+}
+
+#roomList .list-cell{
+    -fx-background-color: #6596C4;
+    -fx-text-fill: white;
+}
+#roomList .list-cell:hover {
+    -fx-background-color: #608eba;
+}
+

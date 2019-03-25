@@ -3,5 +3,38 @@
  */
 
 .mainFxmlClass {
+    -fx-base: #6596C4;
+    -fx-accent: #484848 ;
 
 }
+
+.button {
+    -fx-text-fill: white;
+}
+
+.text-field {
+    -fx-background-color: -fx-text-box-border, #484848;
+    -fx-text-fill: white;
+}
+
+
+.list-view {
+    -fx-background-color: #484848;    
+}
+
+.list-cell{
+    -fx-background-color: #484848;
+    -fx-text-fill: white;
+}
+
+.list-cell:even {
+    -fx-background-color: #494949;
+    -fx-text-fill: white;   
+}
+
+.list-cell:selected:focused {
+    -fx-background-color: #6596C4;
+}
+
+
+
