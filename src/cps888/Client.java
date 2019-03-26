@@ -189,13 +189,13 @@ public class Client {
                             //directmessage
                             String chatID = sentMsg.split(" ")[0].substring(1);
                             messages.putIfAbsent(chatID, FXCollections.observableArrayList());
-                            messages.get(chatID).add(bcMsg);
+                            messages.get(chatID).add(bcMsg.split(" ", 2)[1]);
                         }
                         else if(sentMsg.indexOf("#") == 0) {
                             //group message
                             String chatID = sentMsg.split(" ")[0].substring(1);
                             messages.putIfAbsent(chatID, FXCollections.observableArrayList());
-                            messages.get(chatID).add(bcMsg);
+                            messages.get(chatID).add(bcMsg.split(" ", 2)[1]);
                                                        
                         }
                         sentMsg = null;
