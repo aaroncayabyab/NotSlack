@@ -31,5 +31,22 @@ public class TestClient {
     {
         Assert.assertEquals(client.getUsername(), "Jagmeet", "Clients username should be 'Jagmeet'");
     }
+    @Test
+    public void testGetMessage(){
+        
+    }
+    
+    @Test 
+    public void testGetUserList(){
+       // Assert.assertTrue(client.getUserList().isEmpty(), "No connection, there should be no users");
+        Assert.assertTrue(client.getUserList().size()==1, "User created, there should be user");
+    }
+    
+    @Test
+    public void testGetRoomList(){
+        Assert.assertTrue(client.getRoomList().isEmpty(), "No chat rooms have been created yet");
+        
+    }
+    
     
 }
