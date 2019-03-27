@@ -16,7 +16,8 @@ public class ServerWorker extends Thread {
     private BufferedReader input;
     private final SimpleDateFormat dateFormatter;
     
-//    ChatDatabase cb = new ChatDatabase();
+    private ChatDatabase cd = new ChatDatabase();
+    
     
     public ServerWorker(Server server, Socket clientSocket) {
         this.server = server;
@@ -99,16 +100,9 @@ public class ServerWorker extends Thread {
         if(tokens[0].charAt(0) == '@') {
             isDirectMessage = true;
             sendTo = tokens[0].substring(1);
-            msg = from + " " + datetime + " " + from + ": " + tokens[1];
-//            // establish database connection
-//            cb.connect();
-//            // obtain user id of sender
-//            int sender = cb.getUserRow(from);
-//            // obtain user id of receiver
-//            int receiver = cb.getUserRow(sendTo);
-//            // pass user id of sender and receiver, message, datetime to database
-//            cb.insertChatMessage(sender, receiver, tokens[1], datetime);
+            msg = from + " " + datetime + " " + from + ": " + tokens[1]; 
         }
+        
         //messaging a group case
         if(tokens[0].charAt(0) == '#') {
             isGroup = true;
@@ -124,11 +118,11 @@ public class ServerWorker extends Thread {
                 this.server.getWorkers().remove(worker);
                 System.out.println(worker.getUsername() + " has disconnected");
             } else if(isDirectMessage && (worker.getUsername().equals(sendTo) || worker.getUsername().equals(from))) { // direct message case
-                 worker.send(msg);
+                worker.send(msg);
             } else if(!isGroup || (isGroup && worker.isMemberOfGroup(group))) { // group or all case
                 worker.send(msg);
             }
-        } 
+        }
     }
     
     @Override
@@ -141,6 +135,9 @@ public class ServerWorker extends Thread {
     }
     
     private void handleClientSocket() throws IOException {
+        cd.connect();
+        int userId;
+        int roomId;
         boolean connected = true;
         while(connected) {
             String message = this.input.readLine();
@@ -165,6 +162,9 @@ public class ServerWorker extends Thread {
                 });
             } else if(tokens[0].equals("join")) { //joining a group case
                 this.groups.add(tokens[1].substring(1));
+                userId = cd.getUserRow(this.username);
+                roomId = cd.getRoomRow(tokens[1].substring(1));
+                cd.insertUserRoom(userId, roomId);
             } else if(tokens[0].charAt(0) == '#') { //messaging a group case
                 broadcast(this.username, message);
             } else if(tokens[0].charAt(0) == '@'){ //direct messaging case
@@ -183,6 +183,7 @@ public class ServerWorker extends Thread {
             }
         }
         this.server.removeWorker(this);
+        cd.closeConnection();
         close();
     }   
 }

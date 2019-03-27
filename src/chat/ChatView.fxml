@@ -24,7 +24,7 @@
          <center>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <ListView id="messageList" fx:id="messageList" prefHeight="305.0" prefWidth="474.0" />
+                  <ListView id="messageList" fx:id="messageList" prefHeight="305.0" prefWidth="0.0" />
                   <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="400.0" spacing="10.0">
                      <children>
                         <TextField fx:id="messageField" prefHeight="30.0" prefWidth="378.0">

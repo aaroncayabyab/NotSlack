@@ -38,7 +38,7 @@ public class TestChatDatabase {
         final String userName = "Jagmeet";
         
         Assert.assertEquals(cdb.checkUser(userName), 0, "This user should not be in DB!");
-        cdb.insertUser(userName);
+        //cdb.insertUser(userName);
         Assert.assertEquals(cdb.checkUser(userName), 1, "This user should be in DB!");
 
     }

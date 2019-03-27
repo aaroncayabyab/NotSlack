@@ -17,9 +17,9 @@
             <Image url="@../resources/bg.png" />
          </image>
       </ImageView>
-      <AnchorPane id="loginPane" fx:id="loginPane" layoutX="-7.0" prefHeight="406.0" prefWidth="614.0">
+      <AnchorPane id="loginPane" fx:id="loginPane" layoutX="-7.0" prefHeight="406.0" prefWidth="614.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField id="userField" fx:id="userField" alignment="CENTER" layoutX="225.0" layoutY="236.0" prefHeight="25.0" promptText="Enter username...">
+            <TextField id="userField" fx:id="userField" alignment="CENTER" layoutX="219.0" layoutY="236.0" prefHeight="25.0" promptText="Enter username...">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -27,41 +27,41 @@
                   <Font name="Arial" size="13.0" />
                </font>
             </TextField>
-            <ImageView fitHeight="114.0" fitWidth="285.0" layoutX="164.0" layoutY="22.0">
+            <ImageView fitHeight="114.0" fitWidth="285.0" layoutX="158.0" layoutY="22.0">
                <image>
                   <Image url="@../resources/notslacktitle.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="157.0" fitWidth="146.0" layoutX="234.0" layoutY="79.0">
+            <ImageView fitHeight="157.0" fitWidth="146.0" layoutX="228.0" layoutY="79.0">
                <image>
                   <Image url="@../resources/notslacklogo.png" />
                </image>
             </ImageView>
-            <Text fx:id="errMsg" fill="#fa0000" layoutX="187.0" layoutY="337.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter valid username" textAlignment="CENTER" visible="false" wrappingWidth="239.5" />
-            <Button id="connectBtn" fx:id="connectBtn" alignment="CENTER" layoutX="262.0" layoutY="277.0" mnemonicParsing="false" onAction="#onConnect" prefWidth="89.0" text="Connect" textAlignment="CENTER" textFill="WHITE">
+            <Text fx:id="errMsg" fill="#fa0000" layoutX="180.0" layoutY="338.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter valid username" textAlignment="CENTER" visible="false" wrappingWidth="239.5" />
+            <Button id="connectBtn" fx:id="connectBtn" alignment="CENTER" layoutX="255.0" layoutY="277.0" mnemonicParsing="false" onAction="#onConnect" prefWidth="89.0" text="Connect" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="16.0" />
                </font>
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane id="loginPane" fx:id="createRoomPane" layoutX="-7.0" prefHeight="406.0" prefWidth="614.0" visible="false">
+      <AnchorPane id="loginPane" fx:id="createRoomPane" layoutX="-7.0" prefHeight="406.0" prefWidth="614.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Text fx:id="createRoomDescription" fill="WHITE" layoutX="210.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter room name:">
+            <Text fx:id="createRoomDescription" fill="WHITE" layoutX="203.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter room name:">
                <font>
                   <Font name="Arial Black" size="20.0" />
                </font>
             </Text>
-            <ImageView fitHeight="157.0" fitWidth="146.0" layoutX="234.0" layoutY="27.0">
+            <ImageView fitHeight="157.0" fitWidth="146.0" layoutX="227.0" layoutY="25.0">
                <image>
                   <Image url="@../resources/notslacklogo.png" />
                </image>
             </ImageView>
-            <Button id="connectBtn" fx:id="createRoomBtn" layoutX="266.0" layoutY="262.0" mnemonicParsing="false" onAction="#onCreateRoom" prefHeight="27.0" prefWidth="82.0" text="Join">
+            <Button id="connectBtn" fx:id="createRoomBtn" layoutX="259.0" layoutY="262.0" mnemonicParsing="false" onAction="#onCreateRoom" prefHeight="27.0" prefWidth="82.0" text="Join">
                <font>
                   <Font name="Arial Bold" size="17.0" />
                </font></Button>
-            <TextField id="userField" fx:id="roomField" alignment="CENTER" layoutX="224.0" layoutY="216.0" prefHeight="25.0">
+            <TextField id="userField" fx:id="roomField" alignment="CENTER" layoutX="217.0" layoutY="218.0" prefHeight="25.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -69,14 +69,14 @@
             <Text fx:id="errMsgRoom" fill="#fa0000" layoutX="188.0" layoutY="330.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Room already added." textAlignment="CENTER" visible="false" wrappingWidth="239.5" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="menuPane" prefHeight="400.0" prefWidth="600.0" visible="false">
+      <AnchorPane fx:id="menuPane" prefHeight="400.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="106.0" fitWidth="98.0" layoutX="-5.0" layoutY="-8.0">
                <image>
                   <Image url="@../resources/notslacklogo.png" />
                </image>
             </ImageView>
-            <Text fx:id="welcomeText" fill="WHITE" layoutX="89.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi, []!" textAlignment="CENTER" wrappingWidth="400.0">
+            <Text fx:id="welcomeText" fill="WHITE" layoutX="100.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi, []!" textAlignment="CENTER" wrappingWidth="400.0">
                <font>
                   <Font name="Arial" size="36.0" />
                </font>
