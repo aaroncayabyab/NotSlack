@@ -6,6 +6,7 @@
 package menu;
 
 import cps888.Client;
+import cps888.ChatDatabase;
 import chat.Chat;
 import java.io.IOException;
 
@@ -34,6 +35,8 @@ public class MenuController implements Initializable {
     //General variables
     private Client client;
     ArrayList<String> users;
+    
+    private ChatDatabase cd = new ChatDatabase();
 
     @FXML
     private Text errMsg; 
@@ -64,13 +67,27 @@ public class MenuController implements Initializable {
     //Methods
     @FXML
     public void onConnect(ActionEvent event) throws InterruptedException {
-        String user = userField.getText();    
+        String user = userField.getText();      
+        
         if(user.equals("") || user == null) {
             errMsg.setText("Please enter valid username.");
             errMsg.setVisible(true);            
         }
         else {
             client = new Client(user, "localhost", 5000);
+            cd.connect();
+            int userCount = cd.checkUser(user);
+
+            // if user does not exist in database, insert user information into database
+            if (userCount == 0) {
+                cd.insertUser(user, "online");
+            }
+            // if pre existing user, update status to online
+            else {
+                cd.updateUser(user, "online");
+            }
+            cd.closeConnection();
+            
             if(!client.start()) {          
                 errMsg.setText("Unable to connect to server");
                 errMsg.setVisible(true);
@@ -124,6 +141,9 @@ public class MenuController implements Initializable {
         errMsgRoom.setVisible(false);
         roomField.clear();
         client.getRoomList().add(roomName);
+        cd.connect();
+        cd.insertRoom(roomName);
+        cd.closeConnection();
         
         ObservableList rooms = client.getRoomList();
         roomList.setItems(rooms);
