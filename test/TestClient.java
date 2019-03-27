@@ -33,20 +33,28 @@ public class TestClient {
     }
     @Test
     public void testGetMessage(){
-        
+        client.start();
+        Assert.assertTrue(client.getMessage()!=null, "Message should have a value");
     }
     
     @Test 
     public void testGetUserList(){
-       // Assert.assertTrue(client.getUserList().isEmpty(), "No connection, there should be no users");
-        Assert.assertTrue(client.getUserList().size()==1, "User created, there should be user");
+        Assert.assertTrue(client.getUserList()!=null, "User list should be initialized");
+       
+       client.send("getActiveUsers");
+       client.start();
+       Assert.assertTrue(client.getUserList().size()==1, "User created, there should be user");
     }
     
     @Test
     public void testGetRoomList(){
-        Assert.assertTrue(client.getRoomList().isEmpty(), "No chat rooms have been created yet");
         
+        Assert.assertTrue(client.getRoomList().isEmpty(), "No chat rooms have been created yet");
+        client.send("getChatRooms");
+        client.start();
+        Assert.assertTrue(client.getRoomList().size()==1, "There should be only one chat room");
     }
+  
     
-    
+
 }
