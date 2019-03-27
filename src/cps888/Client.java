@@ -23,6 +23,8 @@ public class Client {
     private static ObservableList<String> rooms;
     private static Map<String, ObservableList<String>> messages;
     
+    private ChatDatabase cd = new ChatDatabase();
+    
     public Client(String username, String server, int port) {
         this.username = username;
         this.server = server;
@@ -179,13 +181,36 @@ public class Client {
                             String chatID = sentMsg.split(" ")[0].substring(1);
                             messages.putIfAbsent(chatID, FXCollections.observableArrayList());
                             messages.get(chatID).add(bcMsg.split(" ", 2)[1]);
+                            cd.connect();
+                            String broadcast = bcMsg;
+                            String tokens[] = broadcast.split(" ", 5);
+                            // obtain user id of sender
+                            int sender = cd.getUserRow(tokens[3].replaceAll(":", ""));
+                            // obtain user id of receiver
+                            int receiver = cd.getUserRow(chatID);
+                            // pass user id of sender and receiver, message, datetime to database
+                            cd.insertChatMessage(sender, receiver, tokens[4], tokens[1]+" "+tokens[2]);
+                            cd.closeConnection();
                         }
                         else if(sentMsg.indexOf("#") == 0) {
                             //group message
                             String chatID = sentMsg.split(" ")[0].substring(1);
                             messages.putIfAbsent(chatID, FXCollections.observableArrayList());
                             messages.get(chatID).add(bcMsg.split(" ", 2)[1]);
-                                                       
+                            cd.connect();
+                            String broadcast = bcMsg;
+                            String tokens[] = broadcast.split(" ", 5);
+                            // obtain user id of sender
+                            int sender = cd.getUserRow(tokens[3].replaceAll(":", ""));
+                            // obtain user id of receiver
+                            int roomId = cd.getRoomRow(chatID);
+                            int[] userIds = cd.getUsersInRoom(roomId, "online");
+                            for(int i=0; i<userIds.length; i++) {
+                                if (sender != userIds[i]) {
+                                    cd.insertChatMessage(sender, userIds[i], tokens[4], tokens[1]+" "+tokens[2]);
+                                }        
+                            }
+                            cd.closeConnection();
                         }
                         sentMsg = null;
                       } else {

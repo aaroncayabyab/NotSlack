@@ -124,6 +124,7 @@ public class MenuController implements Initializable {
     @FXML
     public void onCreateRoom(Event event) {
         //Add room to list
+        int roomCount = 0;
         String roomName = roomField.getText();
         
         if(roomName == null || roomName.equals("")) {
@@ -142,7 +143,12 @@ public class MenuController implements Initializable {
         roomField.clear();
         client.getRoomList().add(roomName);
         cd.connect();
-        cd.insertRoom(roomName);
+        roomCount = cd.checkRoom(roomName);
+        System.out.println("number of rooms:"+roomCount);
+        
+        if (roomCount == 0) {
+            cd.insertRoom(roomName);
+        }
         cd.closeConnection();
         
         ObservableList rooms = client.getRoomList();

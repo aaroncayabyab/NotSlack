@@ -3,10 +3,8 @@ package cps888;
 import java.io.*;
 import java.net.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 
 public class ServerWorker extends Thread {
     private Server server;
@@ -22,8 +20,6 @@ public class ServerWorker extends Thread {
     
     
     public ServerWorker(Server server, Socket clientSocket) {
-        // establish database connection
-        cd.connect();
         this.server = server;
         this.clientSocket = clientSocket;
         // date format follows pattern of yyyy-MM-dd HH:mm:ss
@@ -99,21 +95,12 @@ public class ServerWorker extends Thread {
         String sendTo = "";
         String msg = datetime  + " " + from + ": "  + message;
         String group = "";
-        int sender = 0;
-        int receiver = 0;
-        List <Integer> userId;
         
         //is a direct message if the text contains @username
         if(tokens[0].charAt(0) == '@') {
             isDirectMessage = true;
             sendTo = tokens[0].substring(1);
-            msg = from + " " + datetime + " " + from + ": " + tokens[1];
-            // obtain user id of sender
-            sender = cd.getUserRow(from);
-            // obtain user id of receiver
-            receiver = cd.getUserRow(sendTo);
-            // pass user id of sender and receiver, message, datetime to database
-            cd.insertChatMessage(sender, receiver, tokens[1], datetime);
+            msg = from + " " + datetime + " " + from + ": " + tokens[1]; 
         }
         
         //messaging a group case
@@ -121,14 +108,6 @@ public class ServerWorker extends Thread {
             isGroup = true;
             group = tokens[0].substring(1);
             msg = group + " " + datetime + " " + from + ": " + tokens[1];
-            // obtain user id of sender
-            sender = cd.getUserRow(from);
-            // obtain user id of receiver
-            userId = cd.getUsersInRoom(group, "online");
-            // pass user id of sender and receiver, message, datetime to database
-            for(int id: userId) {
-                cd.insertChatMessage(sender, id, tokens[1], datetime);
-            }
         }
         if(from.equals("")) msg = message;
         

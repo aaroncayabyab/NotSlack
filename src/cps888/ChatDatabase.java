@@ -26,7 +26,7 @@ public class ChatDatabase {
     private ResultSet rs;
     private Statement st;
     
-    List <Integer> userId;
+    ArrayList <Integer> userId;
     
     // establish connection to local mysql database given credentials
     public Connection connect() {
@@ -151,6 +151,25 @@ public class ChatDatabase {
         return 0;
     }
     
+    // check if a chat room already exists in the group table
+    public int checkRoom(String n) {
+        try {
+            pst = conn.prepareStatement("SELECT * FROM chat_db."+GROUP_TABLE+" WHERE name = '"+n+"'");
+            // execute SELECT statement 
+            rs = pst.executeQuery();       
+            // result of execution is ResultSet
+            // rs.first() is used to obtain first row of query result
+            if (rs.first()) {
+                // if rs.first() is true, then user already exists in database
+                return 1;
+            }
+        }
+        catch (SQLException e) {
+            Logger.getLogger(ChatDatabase.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
+    }
+    
     // store user ids for users in a chat room 
     public void insertUserRoom(int u, int g) {
         try {
@@ -165,21 +184,41 @@ public class ChatDatabase {
     }
     
     // retrieve all online users in a given chat room
-    public List<Integer> getUsersInRoom(String n, String s) {
-        userId.clear();
+    public Integer getUsersInRoomCount(int g, String s) {
         try {
-            pst = conn.prepareCall("SELECT userid FROM usergroup INNER JOIN user ON usergroup.userid = user.id "
+            pst = conn.prepareCall("SELECT count(distinct(userid)) as count FROM usergroup INNER JOIN user ON usergroup.userid = user.id "
                     + "INNER JOIN chat_db.group ON usergroup.groupid = chat_db.group.id "
-                    + "WHERE chat_db.group.name = '"+n+"' and user.status = '"+s+"'");
+                    + "WHERE chat_db.group.id = '"+g+"' and user.status = '"+s+"'");
             rs = pst.executeQuery();
-            while (rs.first()) {
-                userId.add(rs.getInt("userid"));
+            
+            if (rs.first()) {
+                return rs.getInt("count");
             }
         }
         catch (SQLException e) {
             Logger.getLogger(ChatDatabase.class.getName()).log(Level.SEVERE, null, e);
         }
-        return userId;
+        return 0;
+    }
+    
+    // retrieve all online users in a given chat room
+    public int[] getUsersInRoom(int g, String s) {
+        int i = getUsersInRoomCount(g,s);
+        int[] users = new int[i];
+        try {
+            pst = conn.prepareCall("SELECT distinct(userid) FROM usergroup INNER JOIN user ON usergroup.userid = user.id "
+                    + "INNER JOIN chat_db.group ON usergroup.groupid = chat_db.group.id "
+                    + "WHERE chat_db.group.id = '"+g+"' and user.status = '"+s+"'");
+            rs = pst.executeQuery();  
+            for (int j=0; j<users.length; j++) {
+                rs.next();
+                users[j] = rs.getInt("userid");
+            }
+        }
+        catch (SQLException e) {
+            Logger.getLogger(ChatDatabase.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return users;
     }
     
     // terminate database connection
