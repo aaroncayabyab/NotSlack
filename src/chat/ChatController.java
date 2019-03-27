@@ -126,6 +126,28 @@ public class ChatController implements Initializable {
 
                     Thread.sleep(100);
                     messageList.setItems(client.getMessageList(name));
+                    messageList.setCellFactory(param -> new ListCell<String>() {
+                        @Override
+                       protected void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (empty || item==null) {
+                               setGraphic(null);
+                               setText(null);                             
+                            }
+                            else{
+                               // set the width's
+                               setMinWidth(param.getPrefWidth());
+                               setMaxWidth(param.getPrefWidth());
+                               setPrefWidth(param.getPrefWidth());
+                               // allow wrapping
+                               setWrapText(true);
+                               
+                               String[] contents = item.split(" ", 3);                              
+                               item = contents[0] + " " + contents[1] + "\n" + contents[2];                                 
+                               setText(item);
+                           }
+                       }                       
+                    });
                                       
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ChatController.class.getName()).log(Level.SEVERE, null, ex);

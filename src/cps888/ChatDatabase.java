@@ -13,7 +13,7 @@ public class ChatDatabase {
     public final String DATABASE_NAME = "chat_db";
     public final String USERNAME = "root";
     public final String PASSWORD = "rootpassword";  
-    public final String MYSQL_URL = "jdbc:mysql://localhost:3306/"+DATABASE_NAME;
+    public final String MYSQL_URL = "jdbc:mysql://localhost:3306/"+DATABASE_NAME+"?serverTimezone=EST5EDT";
     
     // user and userchathistory table in database
     public final String USER_TABLE = "user";
