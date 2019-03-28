@@ -2,7 +2,7 @@
 Chat application created with Java object-oriented programming, MySQL database and JavaFX.
 Users are able to chat with one other user (direct messaging) or with multiple users (group chat).
 
-![AppLogin](images/AppLogin.png)
+![](images/AppLogin.PNG)
 
 ## Technologies
 - Java programming with object-oriented principles
@@ -71,6 +71,7 @@ INNER JOIN user s ON userchathistory.useridsender=s.id
 INNER JOIN user r ON userchathistory.useridreceiver=r.id;
 ```
 Result of query:
+
 Sender | Receiver | Message | Datetime
 ------ | -------- | ------- | --------
 UserA | UserB | Hey UserB! | 2019-03-39 21:20:24
@@ -86,6 +87,7 @@ WHERE user.status='online';
 ```
 
 Result of query:
+
 RoomName | Username | Status
 -------- | -------- | ------
 RoomA | UserA | online
