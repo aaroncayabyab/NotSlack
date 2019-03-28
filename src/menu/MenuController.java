@@ -102,9 +102,6 @@ public class MenuController implements Initializable {
                 client.send("getActiveUsers");
                 Thread.sleep(500);
                 userList.setItems(client.getUserList()); 
-                
-                //TODO: also load getchatrooms
-                
             }
         }
 
@@ -200,7 +197,6 @@ public class MenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         
     }  
     

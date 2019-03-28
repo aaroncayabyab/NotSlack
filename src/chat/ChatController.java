@@ -47,7 +47,6 @@ public class ChatController implements Initializable {
     
     @FXML
     public void onSendMessage(Event event) throws InterruptedException {
-        //TODO display messages in listview messageList
         String msg = "";
         if(!isChatRoom) {
             msg = "@"+name+" "+messageField.getText();
