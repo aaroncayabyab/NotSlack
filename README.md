@@ -16,7 +16,7 @@ Users are able to chat with one other user (direct messaging) or with multiple u
 - direct messaging
 - creating and joining groups (chat rooms) and group chatting
 
-## How to Setup
+## Setup Instructions
 1. Git clone this repository for a local copy
 2. Need MySQL (version 8.0) installed
 3. MySQL server needs to be set up and running on your local machine
@@ -32,7 +32,7 @@ Users are able to chat with one other user (direct messaging) or with multiple u
     database password = "rootpassword" 
     MYSQL_URL = "jdbc:mysql://localhost:3306/"+DATABASE_NAME+"?serverTimezone=EST5EDT"
 	```
-	- to log into MySQL as the creatd user, use the following command 
+	- to log into MySQL as the created user, use the following command 
 	```
 	mysql -u root -p
 	```
@@ -47,7 +47,7 @@ Users are able to chat with one other user (direct messaging) or with multiple u
 5. Execute the provided chat_db.sql through command line or mysql client to setup the database schema and import the data
 	- locally the database and the tables (user, group, usergroup, userchathistory) will have been created for the chat application to execute queries with
 	```
-	mysql -u root -p < chat_db.sql
+	mysql -u root -p -h localhost chat_db < chat_db.sql
 	```
 
 ## How to Use Chat Application
@@ -59,9 +59,9 @@ Users are able to chat with one other user (direct messaging) or with multiple u
 6. User can select a room from the list of rooms and message the group
 
 ## Code and Query Samples
-User information is stored in the user table
-Chat room information is stored in the group table
-Chat histories between users is stored in the userchathistory table
+User information is stored in the user table.
+Chat room information is stored in the group table.
+Chat histories between users is stored in the userchathistory table.
 
 Query to view chat histories among users:
 ```
@@ -102,3 +102,7 @@ The TestClient.java test file consists of tests to assert inputs from the user a
 
 Testing Database:
 The TestChatDatabase.java test file consists of tests to make sure connection can be established and terminated with the database. It also consists of tests to check SQL SELECT, INSERT and UPDATE statements execute correctly. These tests are important to ensure information provided by the user on the UI and stored in memory, is consistent with the information stored in the database.
+
+## How to Run Tests
+1. Run the Server.java file
+2. Run TestClient.java or TestChatDatabase.java test files and tests will execute and output results
