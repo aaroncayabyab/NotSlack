@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -100,18 +101,13 @@ public class MenuController implements Initializable {
                 welcomeText.setText("Hi, " + user +"!");
                 
                 client.send("getActiveUsers");
-                Thread.sleep(500);
+                Thread.sleep(100);
                 userList.setItems(client.getUserList()); 
             }
         }
 
     }
     
-    @FXML
-    public void onRefresh(Event event) throws InterruptedException {                       
-        client.send("getActiveUsers");            
-    }
-
     @FXML
     public void onSelectCreate(Event event) {
         menuPane.setVisible(false);
@@ -176,8 +172,7 @@ public class MenuController implements Initializable {
     
     @FXML
     public void onMessageUser(Event event) throws InterruptedException {
-         String dm = userList.getSelectionModel().getSelectedItem();
-                         
+         String dm = userList.getSelectionModel().getSelectedItem();                
          if(dm == null || dm.equals(""))
             return;
          try {
@@ -196,10 +191,5 @@ public class MenuController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-    }  
-    
-
-    
+    public void initialize(URL url, ResourceBundle rb) {}     
 }

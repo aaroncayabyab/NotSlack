@@ -5,6 +5,8 @@ import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.*;
 
 public class Client {
@@ -156,6 +158,7 @@ public class Client {
             try {
                 String serverMsg;
                 while ((serverMsg = input.readLine()) != null) {
+                    sleep(25);
                     bcMsg = serverMsg;
                       if(sentMsg!=null) {
                         if(sentMsg.equals("getActiveUsers")) {
@@ -229,6 +232,8 @@ public class Client {
                 }
             } catch (IOException e) {
                 System.out.println("Server connection closed:" + e);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             } 
         }
     }  
